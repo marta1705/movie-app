@@ -4,6 +4,7 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
+/* carousel */
 
 .movie-card--slide {
     position: relative;
@@ -12,25 +13,98 @@ body {
     align-items: center;
     width: 100%;
     height: 500px;
+    overflow: hidden;
+}
+
+.movie-card--slide-content {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 
 .movie-photo {
-    width: 100%;
-    height: 500px;
+    position: absolute;
+    right: 100px;
+    width: 65%;
+    height: 100%;
     object-fit: cover;
-    mask-image: linear-gradient(to bottom, 
-    transparent, rgba(0, 0, 0, 1) 20%, 
-    rgba(0, 0, 0, 1) 60%, 
-    transparent);
-    -webkit-mask-image: linear-gradient(to bottom, 
-            transparent, rgba(0, 0, 0, 1) 20%, 
-            rgba(0, 0, 0, 1) 60%, 
-            transparent); /* For WebKit browsers */
-      
+    opacity: 65%;
+    mask-image: linear-gradient(to right, 
+        transparent, rgba(0, 0, 0, 1) 20%, 
+        rgba(0, 0, 0, 1) 80%, 
+        transparent),
+        linear-gradient(to bottom, 
+        transparent, rgba(0, 0, 0, 1) 20%, 
+        rgba(0, 0, 0, 1) 60%, 
+        transparent);
+    -webkit-mask-image: linear-gradient(to right, 
+        transparent, rgba(0, 0, 0, 1) 20%, 
+        rgba(0, 0, 0, 1) 80%, 
+        transparent),
+        linear-gradient(to bottom, 
+        transparent, rgba(0, 0, 0, 1) 20%, 
+        rgba(0, 0, 0, 1) 60%, 
+        transparent); /* For WebKit browsers */
+    mask-composite: intersect; /* Combine the masks */
+    -webkit-mask-composite: source-in; /* For WebKit browsers */
 }
 
 .movie-photo-hidden {
     display: none;
+}
+
+.movie-card--desc {
+    height: 100%;
+    position: absolute;
+    left: 100px;
+    color: white;
+    z-index: 10;
+    max-width: 30%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.coming-soon-title {
+    font-size: 50px;
+    font-weight: 300;
+    top: 0;
+}
+
+.movie-title {
+    font-size: 40px;
+    text-shadow: 0 1px 0 black;
+    margin-top: auto;
+    margin-bottom: 10px;
+}
+
+.movie-description {
+    font-size: 15px;
+    font-weight: 300;
+    color: white;
+    text-shadow: 0 1px 0 black;
+}
+
+.episode-name {
+    font-size: 15px;
+    font-weight: 400;
+    color: white;
+    text-shadow: 0 1px 0 black;
+    margin-bottom: 7px;
+}
+
+.release-date {
+    font-size: 15px;
+    font-weight: 400;
+    color: white;
+    text-shadow: 0 1px 0 black;
+    margin-bottom: 100px;
+    border: 1px solid white;
+    padding: 5px;
+    width: fit-content;
 }
 
 .arrow {
@@ -81,6 +155,8 @@ body {
     background-color: grey;
 }
 
+/* header */
+
 .header-container {
     display: flex;
     padding: 10px;
@@ -129,190 +205,3 @@ body {
     display: flex;
   }
   
-
-/* header {
-    padding: 10px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px; 
-  }
-  
-  .header-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    position: relative;
-  }
-  
-  .app-name {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    position: absolute;
-    left: 20px;
-  }
-  
-  .header-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-grow: 0.5;
-    padding: 5px;
-    border-bottom: solid #4D4D4D;
-  }
-  
-  .header-list {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-  }
-  
-  .header-list li {
-    margin: 0 15px;
-  }
-  
-  .header-list a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-  }
-  
-  .header-list a.active {
-    color: #1e90ff; 
-  }
-  
-  .search-icon-container {
-    position: absolute;
-    right: 20px;
-    display: flex;
-    align-items: center;
-  } */
-  
-/* header {
-    padding: 10px 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 60px;
-    position: relative;
-}
-
-.header-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
-    position: relative;
-}
-
-.app-name {
-    color: white;
-    font-size: 24px;
-    font-weight: bold;
-    margin-right: auto;
-}
-
-.header-div {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 5px;
-    border-bottom: solid #4D4D4D;
-    flex-grow: 1;
-    width: fit-content;
-}
-
-.header-list {
-    list-style: none;
-    display: flex;
-    margin: 0;
-    padding: 0;
-    align-items: center;
-}
-
-.header-list li {
-    margin: 0 15px;
-}
-
-.header-list a {
-    color: white;
-    text-decoration: none;
-    font-size: 18px;
-}
-
-.header-list a.active {
-    color: #39ACE7;
-}
-
-.search-icon-container {
-    display: flex;
-    align-items: center;
-    position: absolute;
-    right: 10px;
-} */
-
-/* header a {
-    color: white;
-    font-size: 1.3rem;
-    text-decoration: none;
-    transition: all 0.3s ease;
-}
-
-.header-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-bottom: 10px;
-}
-
-.header-div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: fit-content;
-    padding: 5px;
-}
-
-.header-list {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 0;
-    padding: 0;
-    margin: 0;
-}
-
-.header-list a.active {
-    color: #39ACE7;
-}
-
-.header-list li {
-    margin: 5px;
-}
-
-.divider {
-    border: 0;
-    border-top: 1px solid white;
-    opacity: 50%;
-    position: relative;
-    left: 50%;
-    right: 10px;
-    width: calc(60%);
-    transform: translate(-52%);
-}
-
-.search-icon-container {
-    /* display: flex;
-    justify-content: center;
-    align-items: center;
-    */ 
-    /* margin-right: 15px; */
-    /* margin-top: 5px; */
-    /* margin-left: auto;
-    float: right;
-} */

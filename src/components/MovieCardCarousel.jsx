@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import {BsArrowLeftCircleFill, BsArrowRightCircleFill} from 'react-icons/bs'
 
-export default function MovieCardCarousel({movies}) {
+export default function MovieCardCarousel({movies, type}) {
   const [slide, setSlide] = useState(0)
 
   const nextSlide = () => {
@@ -16,7 +16,22 @@ export default function MovieCardCarousel({movies}) {
     <div className='movie-card--slide'>
       <BsArrowLeftCircleFill className='arrow arrow-left' onClick={prevSlide}/>
         {movies.map((movie, idx) => {
-            return <img key={movie.id} alt={movie.title} src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} className={slide === idx ? 'movie-photo' : 'movie-photo movie-photo-hidden' }/>
+            return (
+              <div key={movie.id} className={slide === idx ? 'movie-card--slide-content' : 'movie-card--slide-content movie-photo-hidden'}>
+                <div className='movie-card--desc'>
+                  <h1 className='coming-soon-title'>COMING SOON</h1>
+                    <h2 className='movie-title'>{type === "movies" ? movie.title : movie.name}</h2>
+                    <p className='movie-description'>{movie.overview}</p>
+                    {type === "tvShows" && 
+                    <span className='episode-name'>
+                      {`S${movie.next_episode_to_air.season_number}E${movie.next_episode_to_air.episode_number} "${movie.next_episode_to_air.name}"`}
+                    </span>}
+                    <span className='release-date'>Release date: {type === "movies" ? movie.release_date : movie.next_episode_to_air.air_date}</span>
+                    
+                </div>
+                <img key={movie.id} alt={movie.title} src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} className={slide === idx ? 'movie-photo' : 'movie-photo movie-photo-hidden' }/>
+              </div>
+            )
         })}
         <BsArrowRightCircleFill className='arrow arrow-right' onClick={nextSlide}/>
         <span className='indicators'>
