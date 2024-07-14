@@ -1,20 +1,23 @@
-import { useEffect } from 'react'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { useState } from 'react'
+import Header from './components/Header'
+import Movies from './components/Movies'
+import Home from './components/Home'
+import TvShows from './components/TvShows'
+import Library from './components/Library'
 
 function App() {
-  const [movies, setMovies] = useState([])
 
-  useEffect(()=> {
-    const apiKey = import.meta.env.VITE_API_KEY
-    fetch(`https://api.themoviedb.org/3/movie/popular?api_key=${apiKey}`)
-        .then((res) => res.json())
-        .then((data) => setMovies(data.results))
-  }, [])
-
-  console.log(movies)
   return (
-    <h1>Hello</h1>
+    <Router>
+      <Header />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/tvshows" element={<TvShows />} />
+        <Route path="/library" element={<Library />} />
+      </Routes>
+    </Router>
   )
 }
 
