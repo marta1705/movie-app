@@ -1,6 +1,13 @@
+:root {
+    --primary-color: #121212;
+    --secondary-color: #39ACE7;
+    --third-color: #212121;
+    --accents: #4D4D4D;
+  }
+
 body {
     margin: 0;
-    background-color: #121212;
+    background-color: var(--primary-color);
     font-family: "Roboto", sans-serif;
 }
 
@@ -152,7 +159,7 @@ body {
 }
 
 .indicator-inactive {
-    background-color: grey;
+    background-color: var(--accents);
 }
 
 /* header */
@@ -172,7 +179,7 @@ body {
 
 .header-div {
     flex-grow: 1;
-    border-bottom: solid #4D4D4D;
+    border-bottom: solid var(--accents);
     display: flex;
     justify-content: space-between;
 }
@@ -195,7 +202,7 @@ body {
   }
   
   .header-list a.active {
-    color: #39ACE7; 
+    color: var(--secondary-color); 
   }
 
   .search-icon-container {
@@ -204,4 +211,65 @@ body {
     justify-content: center;
     display: flex;
   }
+
+  /* main section */
   
+  .main-container {
+    margin: 20px;
+    border-top: solid var(--accents);
+  }
+
+  /* dropdown menu */
+
+ .dropdowns-container--main {
+    display: flex;
+    justify-content: center;
+    margin: 10px;
+ }
+
+ .dropdown-container {
+    margin-right: 10px;
+    position: relative;
+ }
+
+
+.dropdown-container::after {
+  --size: 0.3rem;
+  position: absolute;
+  content: "";
+  right: 0.5rem;
+  pointer-events: none;
+}
+
+.dropdown-container::after {
+    border-left: var(--size) solid transparent;
+    border-right: var(--size) solid transparent;
+    border-top: var(--size) solid white;
+    top: 45%;
+  }
+
+ .dropdown-container select {
+    appearance: none;
+    background-color: var(--third-color);
+    border: none;
+    color: white;
+    padding: 7px;
+    border-radius: 8px;
+    width: 220px;
+    overflow: scroll;
+ }
+
+ .dropdown-container select::-webkit-scrollbar {
+    background-color: var(--third-color);
+    width: 16px;
+ }
+
+ .dropdown-container select::-webkit-scrollbar-thumb {
+    background-color: var(--accents);
+    border-radius: 16px;
+    border: 4px solid var(--third-color);
+ }
+
+ .dropdown-container select::-webkit-scrollbar-button {
+    display: none;
+ }
