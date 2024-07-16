@@ -21,7 +21,7 @@ export default function MovieCardCarousel({movies, type}) {
                 <div className='movie-card--desc'>
                   <h1 className='coming-soon-title'>COMING SOON</h1>
                     <h2 className='movie-title'>{type === "movies" ? movie.title : movie.name}</h2>
-                    <p className='movie-description'>{movie.overview}</p>
+                    <p className='movie-description'>{type==="movies" ? movie.overview : movie.tagline}</p>
                     {type === "tvShows" && 
                     <span className='episode-name'>
                       {`S${movie.next_episode_to_air.season_number}E${movie.next_episode_to_air.episode_number} "${movie.next_episode_to_air.name}"`}

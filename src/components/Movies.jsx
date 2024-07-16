@@ -2,11 +2,17 @@ import React, { useState, useEffect } from 'react'
 import MovieCardCarousel from './MovieCardCarousel'
 import DropdownMenu from './DropdownMenu'
 import { useNavigate, useParams } from 'react-router-dom'
+import MovieCard from './MovieCard'
+import PaginationComponent from './PaginationComponent'
 
 export default function Movies() {
     const [movies, setMovies] = useState([])
     const [genres, setGenres] = useState([])
     const [countries, setCountries] = useState([])
+    const [popularMovies, setPopularMovies] = useState([])
+    const [page, setPage] = useState(1)
+    const numOfPages = 10
+
     const navigate = useNavigate()
 
     const date = new Date()
@@ -51,7 +57,13 @@ export default function Movies() {
       fetch(`https://api.themoviedb.org/3/configuration/countries?api_key=${apiKey}`)
           .then((res) => res.json())
           .then((data) => setCountries(data))
-    }, [])
+
+      fetch(`https://api.themoviedb.org/3/discover/movie?api_key=${apiKey}&language=en-US&sort_by=popularity.desc&include_adult=false&include_video=false&page=${page}`)
+          .then((res) => res.json())
+          .then((data) => setPopularMovies(data.results))
+    }, [page])
+
+    console.log(popularMovies)
 
     const filteredMovies = movies.filter(movie => movie.backdrop_path !== null)
 
@@ -81,7 +93,16 @@ export default function Movies() {
             <DropdownMenu options={years} name="Years" onChange={handleYearSelect}/>
             <DropdownMenu options={ratings} name="Ratings" onChange={handleRatingSelect}/>
           </div>
+          <span>
+            POPULAR MOVIES
+          </span>
+          <div className='popular-movies-container'>
+            {popularMovies && popularMovies.map(movie => (
+              <MovieCard movie={movie} />
+            ))}
+          </div>
         </div>
+        <PaginationComponent setPage={setPage} currentPage={page} numOfPages={numOfPages} />
     </div>
 
   )

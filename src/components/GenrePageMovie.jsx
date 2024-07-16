@@ -23,7 +23,7 @@ export default function GenrePageMovie() {
     })
   },[]);
 
-  console.log(movies)
+  console.log(bestMovies)
 
   return (
     <div>

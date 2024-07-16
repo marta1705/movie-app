@@ -84,6 +84,8 @@ export default function TvShows() {
       }
   }, [tvShows]);
 
+  console.log(upcomingTvShows)
+
   function handleGenreSelect(selectedGenre) {
     navigate(`/tvshows/genres/${selectedGenre}`)
   }
