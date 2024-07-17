@@ -83,6 +83,10 @@ export default function Movies() {
       navigate(`/movies/ratings/${selectedRating}`)
     }
 
+    function handleClick(id) {
+      navigate(`/movies/${id}`)
+    }
+
   return (
     <div>
         <MovieCardCarousel movies={filteredMovies} type="movies"/>
@@ -98,7 +102,7 @@ export default function Movies() {
           </span>
           <div className='popular-movies-container'>
             {popularMovies && popularMovies.map(movie => (
-              <MovieCard movie={movie} />
+              <MovieCard key={movie.id} movie={movie} onClick={handleClick} />
             ))}
           </div>
         </div>

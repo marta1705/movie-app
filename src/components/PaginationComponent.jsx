@@ -4,32 +4,24 @@ import { ThemeProvider, createTheme } from '@mui/material/styles'
 
 const theme = createTheme({
     palette: {
-        type: 'dark',
-        primary: {
-            main: '#1976d2', // Primary color for Pagination buttons
-        },
-        background: {
-            default: '#121212', // Background color of the Pagination component
-        },
-        text: {
-            primary: '#ffffff', // Text color of the Pagination component
-        },
+      mode: 'dark', // Use 'mode' instead of 'type' for the theme
+      text: {
+        primary: '#ffffff', // Text color of the Pagination component
+      },
     },
     components: {
-        MuiPagination: {
-            styleOverrides: {
-                root: {
-                    color: '#ffffff', // Override text color of Pagination buttons
-                    '& .Mui-selected': {
-                        bgcolor: '#1976d2', // Override background color of selected Pagination button
-                        color: '#ffffff', // Override text color of selected Pagination button
-                    }
-                },
-
+      MuiPaginationItem: {
+        styleOverrides: {
+          root: {
+            '&.Mui-selected': {
+              color: '#ffffff',
+              backgroundColor: '#4D4D4D',
             },
+          },
         },
+      },
     },
-});
+  });
 
 export default function PaginationComponent({setPage, numOfPages = 500, currentPage = 1}) {
 

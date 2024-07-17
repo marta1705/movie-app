@@ -11,6 +11,21 @@ body {
     font-family: "Roboto", sans-serif;
 }
 
+body::-webkit-scrollbar {
+    background-color: var(--third-color);
+    width: 16px;
+ }
+
+ body::-webkit-scrollbar-thumb {
+    background-color: var(--accents);
+    border-radius: 16px;
+    border: 4px solid var(--third-color);
+ }
+
+ body::-webkit-scrollbar-button {
+    display: none;
+ }
+
 /* carousel */
 
 .movie-card--slide {
@@ -316,4 +331,37 @@ body {
     font-size: 17px;
     padding: 8px 0;
     font-weight: 200;
+ }
+
+ .popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ }
+
+ .inner-popup {
+    border-radius: 10px;
+    position: relative;
+    padding: 55px 25px 25px 25px;
+    max-width: fit-content;
+    background-color: var(--third-color);
+ }
+
+ .btn-close {
+    border-radius: 10px;
+    padding: 8px;
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    opacity: 90%;
+    cursor: pointer;
+    position: absolute;
+    top: 10px; /* Adjust this value as needed */
+    right: 10px; /* Adjust this value as needed */
  }

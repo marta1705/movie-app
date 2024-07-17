@@ -10,6 +10,7 @@ import CountryPageMovie from './components/CountryPageMovie'
 import YearPageMovie from './components/YearPageMovie'
 import RatingPageMovie from './components/RatingPageMovie'
 import { SelectedItemProvider } from './components/SelectedItemContext'
+import MovieInfoPage from './components/MovieInfoPage'
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route exact path="/movies" element={<Movies />} />
+          <Route path="/movies/:id" element={<MovieInfoPage />} />
           <Route path="/movies/genres/:genre" element={<GenrePageMovie />} />
           <Route path="/movies/countries/:country" element={<CountryPageMovie />} />
           <Route path="/movies/years/:year" element={<YearPageMovie />} />
