@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import './MovieInfoPage.css'
-import Genres from './Genres'
+import Genres from '../Genres'
 import YouTube from 'react-youtube'
-import TrailerPopup from './TrailerPopup'
+import TrailerPopup from '../TrailerPopup'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import noImage from '../../lib/no-image.png'
 
 export default function() {
     const { id } = useParams()
@@ -45,23 +46,19 @@ export default function() {
       }, [movieDetails]);
 
     console.log(movieDetails)
-    console.log(collection)
+    console.log(credits)
 
-    const castElements = credits.map(actor => (
+    const castElements = credits?.map(actor => (
         <div className='cast-card'>
-            <img className="actor-photo" src={actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} />
+            <img className="actor-photo" alt={`${actor.name} profile photo`} src={actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} />
             <span className='actor-name'>{actor.name}</span>
             <span className='played-character-text'>{actor.character}</span>
         </div>
     ))
 
-    const recommendationElements = recommendations.map(movie => (
-        <div className='cast-card' onClick={handleClick(movie.id)}>
-            {movie.poster_path ? (
-                <img className="actor-photo" src={`https://image.tmdb.org/t/p/original/${movie.poster_path}`} alt={`${movie.title} Plakat`} />
-            ) : (
-                <img className='actor-photo' src="https://www.movienewz.com/img/films/poster-holder.jpg" alt='Plakat niedostępny'/>
-            )}
+    const recommendationElements = recommendations?.map(movie => (
+        <div className='cast-card' onClick={() => handleClick(movie.id)}>
+            <img className="actor-photo" src={movie.poster_path ? `https://image.tmdb.org/t/p/original/${movie.poster_path}`: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} alt={`${movie.title} Plakat`} />
             <span>{movie.title}</span>
         </div>
     ))
@@ -72,7 +69,7 @@ export default function() {
         1024: { items: 7 },
     };
 
-    const trailerId = movieDetails?.videos.results[movieDetails.videos.results.length - 1].key
+    const trailerId = movieDetails?.videos?.results[movieDetails.videos.results.length - 1]?.key
 
     function handleOpenTrailer() {
         setShowPopup(true)
@@ -98,9 +95,9 @@ export default function() {
                             >&lt; BACK TO MOVIES
                         </button>
                         <img alt={movieDetails.title} src={`https://image.tmdb.org/t/p/original/${movieDetails.backdrop_path}`} className='backdrop-poster'/>
-                        <button className='watch-trailer-btn' onClick={handleOpenTrailer}>
+                        {trailerId && <button className='watch-trailer-btn' onClick={handleOpenTrailer}>
                             WATCH TRAILER
-                        </button>
+                        </button>}
                         <div className='average-votes-container'>
                             <div className='votes-box'>
                                 {movieDetails.vote_average}
@@ -111,7 +108,7 @@ export default function() {
                     <div className='info-container'>
                         <div className='left-column-movie-container'>
                             <div className='movie-info-container'>
-                                <img className='movie-poster' alt={movieDetails.title} src={`https://image.tmdb.org/t/p/original/${movieDetails.poster_path}`} />
+                                <img className='movie-poster' alt={movieDetails.title} src={movieDetails.poster_path ? `https://image.tmdb.org/t/p/original/${movieDetails.poster_path}`: 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} />
                                 <div className='title-genres-container'>
                                     <span className='title-text'>{movieDetails.title}</span>
                                     <div className='genres-container'>
@@ -126,48 +123,64 @@ export default function() {
                             <div className='overview-container'>
                                 <span>OVERVIEW</span>
                                 <p>{movieDetails.overview}</p>
-                                <span>CAST</span>
-                                <div className='cast-container'>
-                                    <AliceCarousel 
-                                        responsive={responsive} 
-                                        disableDotsControls 
-                                        mouseTracking 
-                                        items={castElements}
-                                        renderPrevButton={() => {
-                                            return <ArrowBackIosIcon style={{ position: "absolute", left: -10, top: 65}} />
-                                        }}
-                                        renderNextButton={() => {
-                                            return <ArrowForwardIosIcon style={{ position: "absolute", right: -10, top: 65}} />
-                                        }}
-                                    />
-                                </div>
-                                <span>RECOMMENDED MOVIES</span>
-                                <div className='cast-container'>
-                                    <AliceCarousel 
-                                        responsive={responsive}
-                                        disableDotsControls
-                                        mouseTracking
-                                        items={recommendationElements}
-                                        renderPrevButton={() => {
-                                            return <ArrowBackIosIcon style={{ position: "absolute", left: -15, top: 65}} />
-                                        }}
-                                        renderNextButton={() => {
-                                            return <ArrowForwardIosIcon style={{ position: "absolute", right: -15, top: 65}} />
-                                        }}
-                                    />
-                                </div>
+                                {credits.length > 0 &&
+                                <>
+                                    <span>CAST</span>
+                                    <div className='cast-container'>
+                                        <AliceCarousel 
+                                            responsive={responsive} 
+                                            disableDotsControls 
+                                            mouseTracking 
+                                            items={castElements}
+                                            renderPrevButton={() => {
+                                                return <ArrowBackIosIcon style={{ position: "absolute", left: -10, top: 65}} />
+                                            }}
+                                            renderNextButton={() => {
+                                                return <ArrowForwardIosIcon style={{ position: "absolute", right: -10, top: 65}} />
+                                            }}
+                                        />
+                                    </div>
+                                </>}
+                                
+                                {recommendations.length > 0 && 
+                                <>
+                                    <span>RECOMMENDED MOVIES</span>
+                                    <div className='cast-container'>
+                                        <AliceCarousel 
+                                            responsive={responsive}
+                                            disableDotsControls
+                                            mouseTracking
+                                            items={recommendationElements}
+                                            renderPrevButton={() => {
+                                                return <ArrowBackIosIcon style={{ position: "absolute", left: -15, top: 65}} />
+                                            }}
+                                            renderNextButton={() => {
+                                                return <ArrowForwardIosIcon style={{ position: "absolute", right: -15, top: 65}} />
+                                            }}
+                                        />
+                                    </div>
+                                </>}
                             </div>  
                         </div>
                         {collection && collection.parts &&
                             <div className='collection-container'>
                                 <div className='collection-info-container'>
                                     <span>{collection.name}</span>
-                                    <img className='collection-photo' src={`https://image.tmdb.org/t/p/original/${collection.backdrop_path}`} />
+                                    <img 
+                                        className='collection-photo' 
+                                        src={collection.backdrop_path ? `https://image.tmdb.org/t/p/original/${collection.backdrop_path}` : noImage} 
+                                        alt={collection.name}
+                                    />
                                 </div>
                                 <span>MOVIES IN COLLECTION</span>
                                 {collection.parts.map(part => (
                                     <div key={part.id} className='collection-part-container'>
-                                        <img className='collection-movie-photo' src={`https://image.tmdb.org/t/p/original/${part.backdrop_path}`}/>
+                                        <img 
+                                            onClick={() => handleClick(part.id)} 
+                                            className='collection-movie-photo' 
+                                            src={part.backdrop_path ? `https://image.tmdb.org/t/p/original/${part.backdrop_path}`: noImage}
+                                            alt={part.title}
+                                            />
                                         <span>{part.title}</span>
                                     </div>
                                     )) 

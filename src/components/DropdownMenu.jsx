@@ -12,7 +12,11 @@ export default function DropdownMenu({options, name, onChange}) {
             name === 'Countries' ? option.iso_3166_1 === selectedValue : option.name === selectedValue
           );
         
-        setSelectedItem(selectedObject);
+        setSelectedItem({
+          ...selectedObject,
+          category: name
+        });
+        
         if (onChange) {
             onChange(selectedValue)
         }

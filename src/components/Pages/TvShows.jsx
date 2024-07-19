@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-import MovieCardCarousel from './MovieCardCarousel'
-import DropdownMenu from './DropdownMenu'
+import MovieCardCarousel from '../MovieCardCarousel'
+import DropdownMenu from '../DropdownMenu'
 import { useNavigate } from 'react-router-dom'
 
 export default function TvShows() {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import MovieCardCarousel from './MovieCardCarousel'
-import DropdownMenu from './DropdownMenu'
+import MovieCardCarousel from '../MovieCardCarousel'
+import DropdownMenu from '../DropdownMenu'
 import { useNavigate, useParams } from 'react-router-dom'
-import MovieCard from './MovieCard'
-import PaginationComponent from './PaginationComponent'
+import MovieCard from '../MovieCard'
+import PaginationComponent from '../PaginationComponent'
 
 export default function Movies() {
     const [movies, setMovies] = useState([])
@@ -11,7 +11,7 @@ export default function Movies() {
     const [countries, setCountries] = useState([])
     const [popularMovies, setPopularMovies] = useState([])
     const [page, setPage] = useState(1)
-    const numOfPages = 10
+    const numOfPages = 20
 
     const navigate = useNavigate()
 
@@ -33,13 +33,13 @@ export default function Movies() {
       }
     ))
 
-    const ratings = new Array(10).fill().map((value, index) => (
+    const ratings = new Array(5).fill().map((value, index) => (
       {
         id: index,
-        name: `${index} - ${parseInt(index) + 1} ★`,
+        name: `${index * 2} - ${parseInt(index) * 2 + 2} ★`,
         values: {
-          min: index, 
-          max: parseInt(index) + 1
+          min: index * 2, 
+          max: parseInt(index) * 2 + 2
         }
       }
     ))

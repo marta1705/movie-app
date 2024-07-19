@@ -232,6 +232,7 @@ body::-webkit-scrollbar {
   .main-container {
     margin: 20px;
     border-top: solid var(--accents);
+    padding-top: 10px;
   }
 
   /* dropdown menu */
@@ -297,6 +298,7 @@ body::-webkit-scrollbar {
     font-size: 30px;
     margin-left: 15px;
     font-weight: 500;
+    text-transform: uppercase;
  }
 
  .popular-movies-container {

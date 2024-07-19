@@ -208,10 +208,12 @@
 .collection-part-container {
     display: flex;
     flex-direction: column;
+    max-width: 300px;
 }
 
+
 .collection-movie-photo {
-    width: 300px;
+    width: 100%;
     border-radius: 7px;
     margin-bottom: 5px;
     margin-top: 10px;
@@ -220,6 +222,7 @@
 
 .info-container {
     display: flex;
+    margin-bottom: 20px;
 }
 
 .left-column-movie-container {

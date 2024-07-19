@@ -3,9 +3,15 @@ import './CardCarouselCategory.css'
 import Genres from './Genres'
 import { useNavigate } from 'react-router-dom'
 
-export default function CardCarouselCategory({movies, type, category}) {
+export default function CardCarouselCategory({movies, type, category, onClick}) {
     const [slide, setSlide] = useState(0)
     const navigate = useNavigate()
+
+    function handleImageClick(id) {
+      if (onClick) {
+        onClick(id)
+      }
+    }
     return (
         <div className='carousel-card--slide'>
           <button 
@@ -30,7 +36,16 @@ export default function CardCarouselCategory({movies, type, category}) {
                         <span>Average votes</span>
                       </div>
                     </div>
-                    <img key={movie.id} alt={movie.title} src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} className={slide === idx ? 'carousel-photo' : 'carousel-photo carousel-photo-hidden' }/>
+                    <img 
+                      key={movie.id} 
+                      onClick={() => handleImageClick(movie.id)}
+                      alt={movie.title} 
+                      src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} 
+                      className={slide === idx ? 'carousel-photo' : 'carousel-photo carousel-photo-hidden' }
+                      style={{
+                        cursor: "pointer"
+                      }}
+                    />
                   </div>
                 )
             })}
