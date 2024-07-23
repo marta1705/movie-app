@@ -1,0 +1,39 @@
+.left-column-show-container {
+    width: 85%;
+}
+
+.season-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+.tv-dropdown {
+    max-width: fit-content;
+}
+
+.episodes-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.episode-card {
+    display: flex;
+    flex-direction: column;
+    margin-right: 15px;
+    background-color: #212121;
+    padding: 7px;
+    width: 275px;
+    border-radius: 7px;
+    margin-bottom: 15px;
+}
+
+.episode-card span {
+    color: white;
+}
+
+.episode_photo {
+    border-radius: 7px;
+    margin-bottom: 5px;
+}

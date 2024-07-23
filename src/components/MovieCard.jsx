@@ -1,6 +1,6 @@
 import React from 'react'
 
-export default function MovieCard({ movie, onClick }) {
+export default function MovieCard({ movie, onClick, type }) {
   return (
     <div className='single-movie-container'onClick={() => onClick(movie.id)} >
       {movie.poster_path ? (
@@ -8,7 +8,7 @@ export default function MovieCard({ movie, onClick }) {
     ) : (
         <img className='poster' src="https://www.movienewz.com/img/films/poster-holder.jpg" alt='Plakat niedostępny'/>
     )}
-    <b className='title'>{movie.title}</b>
+    <b className='title'>{type === 'movie' ? movie.title : movie.name}</b>
     </div>
   )
 }

@@ -8,6 +8,7 @@ import Library from './components/Pages/Library'
 import CategoryPage from './components/Pages/CategoryPage'
 import { SelectedItemProvider } from './components/SelectedItemContext'
 import MovieInfoPage from './components/Pages/MovieInfoPage'
+import TvShowInfoPage from './components/Pages/TvShowInfoPage'
 
 
 function App() {
@@ -24,7 +25,8 @@ function App() {
           <Route path="/movies/countries/:country" element={<CategoryPage />} />
           <Route path="/movies/years/:year" element={<CategoryPage />} />
           <Route path="/movies/ratings/:rating" element={<CategoryPage />} />
-          <Route path="/tvshows" element={<TvShows />} />
+          <Route exact path="/tvshows" element={<TvShows />} />
+          <Route path="/tvshows/:id" element={<TvShowInfoPage />}/>
           <Route path="/tvshows/genres/:genre" element={<CategoryPage />} />
           <Route path="/tvshows/countries/:country" element={<CategoryPage />} />
           <Route path="/tvshows/years/:year" element={<CategoryPage />} />

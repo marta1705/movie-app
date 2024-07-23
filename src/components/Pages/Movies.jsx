@@ -89,7 +89,7 @@ export default function Movies() {
 
   return (
     <div>
-        <MovieCardCarousel movies={filteredMovies} type="movies"/>
+        <MovieCardCarousel movies={filteredMovies} type="movies" onClick={handleClick}/>
         <div className="main-container">
           <div className='dropdowns-container--main'>
             <DropdownMenu options={genres} name="Genres" onChange={handleGenreSelect}/>
@@ -102,7 +102,7 @@ export default function Movies() {
           </span>
           <div className='popular-movies-container'>
             {popularMovies && popularMovies.map(movie => (
-              <MovieCard key={movie.id} movie={movie} onClick={handleClick} />
+              <MovieCard key={movie.id} movie={movie} onClick={handleClick} type="movie" />
             ))}
           </div>
         </div>

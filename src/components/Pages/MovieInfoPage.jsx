@@ -112,7 +112,7 @@ export default function() {
                                 <div className='title-genres-container'>
                                     <span className='title-text'>{movieDetails.title}</span>
                                     <div className='genres-container'>
-                                        <Genres id={movieDetails.id} />
+                                        <Genres id={movieDetails.id} type='movie' />
                                     </div>    
                                     <span className='movie-details-small'>{`${movieDetails.release_date} | ${movieDetails.runtime} min`}</span> 
                                 </div>

@@ -1,8 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {BsArrowLeftCircleFill, BsArrowRightCircleFill} from 'react-icons/bs'
 
-export default function MovieCardCarousel({movies, type}) {
+export default function MovieCardCarousel({movies, type, onClick}) {
   const [slide, setSlide] = useState(0)
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setSlide(prevSlide => (prevSlide === movies.length - 1 ? 0 : prevSlide + 1))
+    }, 5000)
+    return () => clearInterval(intervalId)
+  }, [movies.length])
 
   const nextSlide = () => {
     setSlide(slide === movies.length - 1 ? 0 : slide + 1)
@@ -29,7 +36,16 @@ export default function MovieCardCarousel({movies, type}) {
                     <span className='release-date'>Release date: {type === "movies" ? movie.release_date : movie.next_episode_to_air.air_date}</span>
                     
                 </div>
-                <img key={movie.id} alt={movie.title} src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} className={slide === idx ? 'movie-photo' : 'movie-photo movie-photo-hidden' }/>
+                <img 
+                  key={movie.id}
+                  onClick={() => onClick(movie.id)} 
+                  alt={movie.title || movie.name} 
+                  src={`https://image.tmdb.org/t/p/original/${movie.backdrop_path}`} 
+                  className={slide === idx ? 'movie-photo' : 'movie-photo movie-photo-hidden' }
+                  style={{
+                    cursor: 'pointer'
+                  }}
+                />
               </div>
             )
         })}

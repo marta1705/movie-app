@@ -2,12 +2,17 @@ import React, { useState, useEffect } from 'react'
 import MovieCardCarousel from '../MovieCardCarousel'
 import DropdownMenu from '../DropdownMenu'
 import { useNavigate } from 'react-router-dom'
+import PaginationComponent from '../PaginationComponent'
+import MovieCard from '../MovieCard'
 
 export default function TvShows() {
     const [tvShows, setTvShows] = useState([])
     const [upcomingTvShows, setUpcomingTvShows] = useState([])
     const [genres, setGenres] = useState([])
     const [countries, setCountries] = useState([])
+    const [popularShows, setPopularShows] = useState([])
+    const [page, setPage] = useState(1)
+    const numOfPages = 20
     const navigate = useNavigate()
 
     const apiKey = import.meta.env.VITE_API_KEY
@@ -53,7 +58,12 @@ export default function TvShows() {
       fetch(`https://api.themoviedb.org/3/configuration/countries?api_key=${apiKey}`)
           .then((res) => res.json())
           .then((data) => setCountries(data))
-    }, [])
+
+      fetch(`https://api.themoviedb.org/3/discover/tv?api_key=${apiKey}&include_adult=false&language=en-US&page=${page}&sort_by=popularity.desc`)
+          .then((res) => res.json())
+          .then((data) => setPopularShows(data.results))  
+      
+    }, [page])
 
     useEffect(() => {
       const fetchDetails = async () => {
@@ -102,9 +112,13 @@ export default function TvShows() {
     navigate(`/tvshows/ratings/${selectedRating}`)
   }
 
+  function handleClick(id) {
+    navigate(`/tvshows/${id}`)
+  }
+
   return (
     <div>
-        <MovieCardCarousel movies={upcomingTvShows} type="tvShows"/>
+        <MovieCardCarousel movies={upcomingTvShows} type="tvShows" onClick={handleClick}/>
         <div className="main-container">
           <div className='dropdowns-container--main'>
             <DropdownMenu options={genres} name="Genres" onChange={handleGenreSelect}/>
@@ -112,7 +126,16 @@ export default function TvShows() {
             <DropdownMenu options={years} name="Years" onChange={handleYearSelect}/>
             <DropdownMenu options={ratings} name="Ratings" onChange={handleRatingSelect}/>
           </div>
+          <span>
+            POPULAR TV SHOWS
+          </span>
+          <div className='popular-movies-container'>
+            {popularShows && popularShows.map(show => (
+              <MovieCard key={show.id} movie={show} onClick={handleClick} type="tvShow" />
+            ))}
+          </div>
         </div>
+        <PaginationComponent setPage={setPage} currentPage={page} numOfPages={numOfPages} />
     </div>
 
   )
