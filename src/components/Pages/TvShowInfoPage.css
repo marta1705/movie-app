@@ -37,3 +37,23 @@
     border-radius: 7px;
     margin-bottom: 5px;
 }
+
+.episode_photo:hover {
+    cursor: pointer;
+    opacity: 50%;
+    border: 2px solid #39ACE7;
+}
+
+.cast-recommendation-container {
+    margin-left: 20px;
+    color: white;
+}
+
+.episode-photo-popup {
+    width: 300px;
+}
+
+.episoe-details-container {
+    display: flex;
+    flex-direction: column;
+}

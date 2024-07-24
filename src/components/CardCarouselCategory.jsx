@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './CardCarouselCategory.css'
 import Genres from './Genres'
 import { useNavigate } from 'react-router-dom'
@@ -6,6 +6,13 @@ import { useNavigate } from 'react-router-dom'
 export default function CardCarouselCategory({movies, type, category, onClick}) {
     const [slide, setSlide] = useState(0)
     const navigate = useNavigate()
+
+    useEffect(() => {
+      const intervalId = setInterval(() => {
+        setSlide(prevSlide => (prevSlide === movies.length - 1 ? 0 : prevSlide + 1))
+      }, 5000)
+      return () => clearInterval(intervalId)
+    }, [movies.length])
 
     function handleImageClick(id) {
       if (onClick) {
@@ -26,7 +33,7 @@ export default function CardCarouselCategory({movies, type, category, onClick}) 
                       <span className='carousel-path'>{`Movies / ${category}`}</span>
                       <span className='most-popular-text'>MOST POPULAR</span>
                       <div className='genres-container'>
-                        <Genres id={movie.id} />
+                        <Genres id={movie.id} type={type}/>
                       </div>
                       <h2 className='carousel-movie-title'>{type === "movies" ? movie.title : movie.name}</h2>
                       <div className='votes-container'>

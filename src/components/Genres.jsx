@@ -7,7 +7,7 @@ export default function Genres({id, type}) {
 
       const fetchGenres = async () => {
         let url = ''
-        if (type === 'movie') {
+        if (type === 'movie' || type === 'movies') {
           url = `https://api.themoviedb.org/3/movie/${id}?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`
         } else if (type === 'show') {
           url = `https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`

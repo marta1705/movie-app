@@ -345,6 +345,7 @@ body::-webkit-scrollbar {
     display: flex;
     align-items: center;
     justify-content: center;
+    z-index: 10;
  }
 
  .inner-popup {
@@ -352,6 +353,14 @@ body::-webkit-scrollbar {
     position: relative;
     padding: 55px 25px 25px 25px;
     max-width: fit-content;
+    background-color: var(--third-color);
+ }
+
+ .inner-episode-popup {
+    border-radius: 10px;
+    position: relative;
+    padding: 55px 25px 25px 25px;
+    width: 80%;
     background-color: var(--third-color);
  }
 

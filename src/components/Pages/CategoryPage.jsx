@@ -107,6 +107,8 @@ export default function CategoryPage() {
     navigate(`/movies/${id}`)
   }
 
+ // console.log(bestMovies)
+  console.log(allMovies)
 
   const bestMoviesWithPoster = bestMovies.filter(movie => movie.backdrop_path != null)
 
@@ -117,7 +119,7 @@ export default function CategoryPage() {
         <span>ALL {selectedItem.category === "Countries" ? selectedItem.english_name : selectedItem.name} MOVIES</span>
         <div className='popular-movies-container'>
               {allMovies && allMovies.map(movie => (
-                <MovieCard key={movie.id} movie={movie} onClick={handleClick} />
+                <MovieCard key={movie.id} movie={movie} onClick={handleClick} type="movie" />
               ))}
         </div>
       </div>

@@ -155,6 +155,12 @@
     cursor: pointer;
 }
 
+.actor-photo:hover {
+    cursor: pointer;
+    opacity: 50%;
+    border: 2px solid var(--secondary-color);
+}
+
 .cast-card {
     display: flex;
     flex-direction: column;
@@ -218,6 +224,12 @@
     margin-bottom: 5px;
     margin-top: 10px;
     cursor: pointer;
+}
+
+.collection-movie-photo:hover {
+    cursor: pointer;
+    opacity: 50%;
+    border: 2px solid var(--secondary-color);
 }
 
 .info-container {

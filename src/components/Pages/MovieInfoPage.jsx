@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import './MovieInfoPage.css'
 import Genres from '../Genres'
 import YouTube from 'react-youtube'
-import TrailerPopup from '../TrailerPopup'
+import {TrailerPopup} from '../PopupComponents'
 import AliceCarousel from 'react-alice-carousel'
 import 'react-alice-carousel/lib/alice-carousel.css'
 import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
@@ -132,6 +132,7 @@ export default function() {
                                             disableDotsControls 
                                             mouseTracking 
                                             items={castElements}
+                                            infinite
                                             renderPrevButton={() => {
                                                 return <ArrowBackIosIcon style={{ position: "absolute", left: -10, top: 65}} />
                                             }}
@@ -150,6 +151,7 @@ export default function() {
                                             responsive={responsive}
                                             disableDotsControls
                                             mouseTracking
+                                            infinite
                                             items={recommendationElements}
                                             renderPrevButton={() => {
                                                 return <ArrowBackIosIcon style={{ position: "absolute", left: -15, top: 65}} />
