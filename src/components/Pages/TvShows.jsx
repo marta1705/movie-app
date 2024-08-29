@@ -34,13 +34,13 @@ export default function TvShows() {
       }
     ))
 
-    const ratings = new Array(10).fill().map((value, index) => (
+    const ratings = new Array(5).fill().map((value, index) => (
       {
         id: index,
-        name: `${index} - ${parseInt(index) + 1} ★`,
+        name: `${index * 2} - ${parseInt(index) * 2 + 2} ★`,
         values: {
-          min: index, 
-          max: parseInt(index) + 1
+          min: index * 2, 
+          max: parseInt(index) * 2 + 2
         }
       }
     ))

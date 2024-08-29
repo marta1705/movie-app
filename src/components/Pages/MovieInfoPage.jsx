@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, NavLink, useNavigate, useParams } from 'react-router-dom'
 import './MovieInfoPage.css'
 import Genres from '../Genres'
 import YouTube from 'react-youtube'
@@ -14,6 +14,7 @@ export default function() {
     const { id } = useParams()
     const [movieDetails, setMovieDetails] = useState()
     const [credits, setCredits] = useState([])
+    const [allCast, setAllCast] = useState()
     const [showPopup, setShowPopup] = useState(false)
     const [recommendations, setRecommendations] = useState([])
     const [collection, setCollection] = useState([])
@@ -26,7 +27,10 @@ export default function() {
 
         fetch(`https://api.themoviedb.org/3/movie/${id}/credits?api_key=${import.meta.env.VITE_API_KEY}`)
         .then(res => res.json())
-        .then(data => setCredits(data.cast))
+        .then(data => (
+            setCredits(data.cast),
+            setAllCast(data)
+        ))
 
         
         fetch(`https://api.themoviedb.org/3/movie/${id}/recommendations?api_key=${import.meta.env.VITE_API_KEY}`)
@@ -46,11 +50,16 @@ export default function() {
       }, [movieDetails]);
 
     console.log(movieDetails)
-    console.log(credits)
+    console.log(allCast)
 
     const castElements = credits?.map(actor => (
         <div className='cast-card'>
-            <img className="actor-photo" alt={`${actor.name} profile photo`} src={actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} />
+            <img 
+                className="actor-photo" 
+                alt={`${actor.name} profile photo`} 
+                onClick={() => navigate(`/person/${actor.id}`)}
+                src={actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} 
+            />
             <span className='actor-name'>{actor.name}</span>
             <span className='played-character-text'>{actor.character}</span>
         </div>
@@ -83,6 +92,7 @@ export default function() {
         navigate(`/movies/${id}`)
         window.scroll(0,0)
     }
+
 
     return (
         <>
@@ -125,7 +135,7 @@ export default function() {
                                 <p>{movieDetails.overview}</p>
                                 {credits.length > 0 &&
                                 <>
-                                    <span>CAST</span>
+                                    <Link to={`/${id}/credits`} style={{color: 'white'}} state={{credits: allCast}}><span>CAST & CREW</span></Link>
                                     <div className='cast-container'>
                                         <AliceCarousel 
                                             responsive={responsive} 

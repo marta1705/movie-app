@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { Link, useNavigate, useParams } from 'react-router-dom'
 import Genres from '../Genres'
 import {TrailerPopup, TvEpisodePopup} from '../PopupComponents'
 import YouTube from 'react-youtube'
@@ -16,22 +16,27 @@ export default function TvShowInfoPage() {
     const [seasonNumber, setSeasonNumber] = useState(1)
     const [seasonDetails, setSeasonDetails] = useState()
     const [credits, setCredits] = useState([])
+    const [allCast, setAllCast] = useState()
     const [recommendations, setRecommendations] = useState()
     const [showPopup, setShowPopup] = useState(false)
     const [showEpisodePopup, setShowEpisodePopup] = useState(false)
     const [episodeNumber, setEpisodeNumber] = useState()
     const [episodeDetails, setEpisodeDetails] = useState()
+    const [episodesToShow, setEpisodesToShow] = useState(10)
     const navigate = useNavigate()
 
-
+    
     useEffect(() => {
         fetch(`https://api.themoviedb.org/3/tv/${id}?api_key=${import.meta.env.VITE_API_KEY}&language=en-US&append_to_response=videos`)
           .then((res) => res.json())
           .then((data) => setTvDetails(data))  
 
-        fetch(`https://api.themoviedb.org/3/tv/${id}/credits?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`)
+        fetch(`https://api.themoviedb.org/3/tv/${id}/aggregate_credits?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`)
           .then((res) => res.json())
-          .then((data) => setCredits(data.cast))  
+          .then((data) => {
+            setCredits(data.cast)
+            setAllCast(data)
+        })  
 
         fetch(`https://api.themoviedb.org/3/tv/${id}/recommendations?api_key=${import.meta.env.VITE_API_KEY}&language=en-US`)
           .then(res => res.json())
@@ -50,6 +55,7 @@ export default function TvShowInfoPage() {
             }
         }
         fetchSeasonDetails()
+        setEpisodesToShow(10)
     }, [seasonNumber, id])
 
     useEffect(() => {
@@ -68,13 +74,14 @@ export default function TvShowInfoPage() {
         }
     }, [episodeNumber])
 
-    console.log(tvDetails)
-    console.log(seasonDetails)
-    console.log(episodeDetails)
-
-    const castElements = credits?.map(actor => (
+    const castElements = credits?.slice(0,10).map(actor => (
         <div className='cast-card'>
-            <img className="actor-photo" alt={`${actor.name} profile photo`} src={actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} />
+            <img 
+                className="actor-photo" 
+                alt={`${actor.name} profile photo`}
+                onClick={() => navigate(`/person/${actor.id}`)} 
+                src={actor.profile_path ? `https://image.tmdb.org/t/p/original/${actor.profile_path}` : 'https://upload.wikimedia.org/wikipedia/commons/f/fc/No_picture_available.png'} 
+            />
             <span className='actor-name'>{actor.name}</span>
             <span className='played-character-text'>{actor.character}</span>
         </div>
@@ -104,6 +111,10 @@ export default function TvShowInfoPage() {
         568: { items: 5 },
         1024: { items: 8 },
     };
+
+    const handleLoadMore = () => {
+        setEpisodesToShow((prev) => prev + 10)
+    }
 
     function handleOpenTrailer() {
         setShowPopup(true)
@@ -164,16 +175,16 @@ export default function TvShowInfoPage() {
                             <div className='genres-container'>
                                 <Genres id={tvDetails.id} type='show' />
                             </div>    
-                            <span className='movie-details-small'>{`${tvDetails.first_air_date.substring(0,4)} - ${!tvDetails.in_production ? tvDetails.last_air_date.substring(0,4) : ''} | ${tvDetails.number_of_seasons} seasons | ${tvDetails.in_production ? 'Ongoing' : 'Ended'}`}</span> 
+                            <span className='movie-details-small'>{`${tvDetails.first_air_date.substring(0,4)} - ${!tvDetails.in_production ? tvDetails.last_air_date.substring(0,4) : ''} | ${tvDetails.number_of_seasons} ${tvDetails.number_of_seasons > 1 ?  'seasons' : 'season'} | ${tvDetails.in_production ? 'Ongoing' : 'Ended'}`}</span> 
                         </div>
                     </div>
                     <TrailerPopup trigger={showPopup} onClick={handleCloseTrailer}>
                         <YouTube videoId={trailerId} />
                     </TrailerPopup>
-                    <div className='overview-container'>
+                    {tvDetails.overview && <div className='overview-container'>
                         <span>OVERVIEW</span>
                         <p>{tvDetails.overview}</p>   
-                    </div>  
+                    </div>}
                     <div className='season-container'>
                         <div className='dropdown-container tv-dropdown'>
                             <select onChange={(e) => {
@@ -186,7 +197,7 @@ export default function TvShowInfoPage() {
                             </select>
                         </div>
                         <div className='episodes-container'>
-                            {seasonDetails && seasonDetails.episodes?.map(episode => {
+                            {seasonDetails && seasonDetails.episodes?.slice(0, episodesToShow).map(episode => {
                                 return (
                                     <div key={episode.id} className='episode-card'>
                                         <img 
@@ -202,7 +213,9 @@ export default function TvShowInfoPage() {
                                     </div>
                                 )
                             })}
+                            
                         </div>
+                        {episodesToShow <= seasonDetails?.episodes?.length && <button onClick={handleLoadMore} className='load-more-btn'>Load More</button>}
                     </div>
                     <TvEpisodePopup trigger={showEpisodePopup} onClick={handleCloseEpisode}>
                         {episodeDetails && (
@@ -214,11 +227,11 @@ export default function TvShowInfoPage() {
                                         <span className='movie-details-small'>{`${episodeDetails.air_date} | ${episodeDetails.runtime} min | S${episodeDetails.season_number}E${episodeDetails.episode_number}`}</span> 
                                     </div>
                                 </div>
-                                <div className='overview-container'>
+                                {episodeDetails.overview && <div className='overview-container'>
                                     <span>OVERVIEW</span>
                                     <p>{episodeDetails.overview}</p>   
-                                </div>  
-                                <div className='cast-recommendation-container overview-container'>
+                                </div>  }
+                                {episodeGuestStars.length > 0 && <div className='cast-recommendation-container overview-container'>
                                     <span>GUEST STARS</span>
                                     <div className='cast-container'>
                                         <AliceCarousel 
@@ -233,13 +246,13 @@ export default function TvShowInfoPage() {
                                             renderNextButton={renderNextButton}
                                         />
                                     </div>
-                                </div>
+                                </div>}
                             </div>
                         )}
                     </TvEpisodePopup>
                     {credits.length > 0 &&
                     <div className='cast-recommendation-container overview-container'>
-                        <span>CAST</span>
+                        <Link to={`/${id}/credits`} style={{color: 'white'}} state={{credits: allCast, type: 'tv'}}><span>CAST & CREW</span></Link>
                         <div className='cast-container'>
                             <AliceCarousel
                                 responsive={responsive} 
@@ -256,7 +269,7 @@ export default function TvShowInfoPage() {
                     </div>}
                     {recommendations && recommendations.length > 0 && 
                     <div className='cast-recommendation-container overview-container'>
-                        <span>RECOMMENDED MOVIES</span>
+                        <span>RECOMMENDED TV SHOWS</span>
                         <div className='cast-container'>
                             <AliceCarousel 
                                 responsive={responsive}

@@ -23,14 +23,14 @@ export default function CardCarouselCategory({movies, type, category, onClick}) 
         <div className='carousel-card--slide'>
           <button 
             className='back-btn'
-            onClick={() => navigate("/movies")}
-            >&lt; BACK TO MOVIES</button>
+            onClick={() => type === 'show' ? navigate("/tvshows") : navigate("/movies")}
+            >&lt; {type === 'show' ? `BACK TO TV SHOWS` : `BACK TO MOVIES`}</button>
             {movies.map((movie, idx) => {
                 return (
                   <div key={movie.id} className={slide === idx ? 'carousel-card--slide-content' : 'carousel-card--slide-content carousel-photo-hidden'}>
                     <div className='carousel-card--desc'>
                       <h1 className='carousel-title'>{`Best of ${category}`}</h1>
-                      <span className='carousel-path'>{`Movies / ${category}`}</span>
+                      <span className='carousel-path'>{type === "movies" ? `Movies / ${category}` : `Tv Shows / ${category}`}</span>
                       <span className='most-popular-text'>MOST POPULAR</span>
                       <div className='genres-container'>
                         <Genres id={movie.id} type={type}/>

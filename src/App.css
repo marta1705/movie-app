@@ -373,6 +373,76 @@ body::-webkit-scrollbar {
     opacity: 90%;
     cursor: pointer;
     position: absolute;
-    top: 10px; /* Adjust this value as needed */
-    right: 10px; /* Adjust this value as needed */
+    top: 10px; 
+    right: 10px; 
  }
+
+ .credits-container {
+    display: flex;
+    flex-wrap: wrap;
+    color: white;
+ }
+
+ .cast-card-credits {
+    max-width: 100px;
+    margin-right: 30px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+ }
+
+ .cast-card-credits span {
+    font-size: 12px;
+    margin: 3px;
+ }
+
+ .actor-photo-credits {
+    width: 100px;
+    margin-right: 10px;
+    cursor: pointer;
+    border-radius: 7px;
+}
+
+.actor-photo-credits:hover {
+    cursor: pointer;
+    opacity: 50%;
+    border: 2px solid var(--secondary-color);
+}
+
+.title-genres-container {
+    display: flex;
+    flex-direction: column;
+}
+.person-details {
+    margin-left: 10px;
+    margin-top: 10px;
+    font-weight: 200;
+    font-size: 15px;
+}
+
+.person-movie-container {
+    display: flex;
+    margin-top: 20px;
+}
+
+.person-movie-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.person-movie-details h3 {
+    margin: 0;
+}
+.person-movie-info {
+    font-weight: 300 !important;
+    font-size: 15px !important;
+}
+
+.person-movie-info-date {
+    font-weight: 300 !important;
+    font-size: 13px !important;
+    margin-top: auto;
+}
+
+
+
